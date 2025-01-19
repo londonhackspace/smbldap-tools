@@ -5,7 +5,7 @@ set -e
 
 rm -rf autom4te*.cache
 
-grep AC_CONFIG_HEADER configure.in >/dev/null && autoheader
+grep AC_CONFIG_HEADER configure.ac >/dev/null && autoheader
 autoconf
 
 rm -rf autom4te*.cache
