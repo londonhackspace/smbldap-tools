@@ -58,13 +58,17 @@ if (!defined($user_entry)) {
 # Canonize user name
 $user = $user_entry->get_value('uid');
 
-if ($< != 0) {
-    print "You must be root to delete an user\n";
+if (!can_read_bind_conf()) {
+    print "You must have access to the ldap admin user to delete a user\n";
     exit (1);
 }
 
 my $homedir;
 if (defined($Options{'r'}) || defined($Options{'R'})) {
+    if ( $< != 0 ) {
+        print "You must be root to delete a users home directory\n";
+        exit (1);
+    }
     $homedir=get_homedir($user);
     if ($homedir !~ /^\/.+\/(.*)$user/) {
 	print "Refusing to delete this home directory: $homedir\n";

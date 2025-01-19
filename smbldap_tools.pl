@@ -100,6 +100,7 @@ use vars qw(%config $ldap);
   group_name_by_type
   group_type_by_name
   subst_configvar
+  can_read_bind_conf
   read_conf
   read_parameter
   subst_user
@@ -158,6 +159,10 @@ sub subst_configvar {
     return $value;
 }
 
+sub can_read_bind_conf {
+    return -r $smbldap_bind_conf
+}
+
 sub read_conf {
     my %conf;
     open( CONFIGFILE, "$smbldap_conf" )
@@ -173,7 +178,7 @@ sub read_conf {
     }
     close(CONFIGFILE);
 
-    if ( $< == 0 ) {
+    if ( -r $smbldap_bind_conf ) {
         open( CONFIGFILE, "$smbldap_bind_conf" )
           || die "Unable to open $smbldap_bind_conf for reading !\n";
         while (<CONFIGFILE>) {

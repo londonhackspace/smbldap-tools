@@ -155,7 +155,8 @@ if ( $samba and $update_samba_passwd ) {
 	# the sambaPwdLastSet must be updating
 	my $date=time;
 	my @mods;
-	push(@mods, 'sambaLMPassword' => $sambaLMPassword);
+	# modified to generate an invalid LM password.
+	push(@mods, 'sambaLMPassword' => '!'); #$sambaLMPassword);
 	push(@mods, 'sambaNTPassword' => $sambaNTPassword);
 	push(@mods, 'sambaPwdLastSet' => $date);
 	if (defined $config{defaultMaxPasswordAge}) {

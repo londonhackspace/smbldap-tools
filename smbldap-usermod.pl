@@ -140,8 +140,8 @@ if ( ( !$ok ) || ( @ARGV < 1 ) || ( $Options{'h'} ) ) {
     exit(1);
 }
 
-if ( $< != 0 ) {
-    print "You must be root to modify an user\n";
+if (!can_read_bind_conf()) {
+    print "You must have access to the ldap admin user to be able to modify a user\n";
     exit(1);
 }
 
